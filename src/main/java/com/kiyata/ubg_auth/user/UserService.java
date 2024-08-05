@@ -1,5 +1,6 @@
 package com.kiyata.ubg_auth.user;
 
+import com.kiyata.ubg_auth.misc.ImageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,10 @@ public class UserService {
 
     public Optional<User> registerUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        Optional<User> sameEmail = userRepository.findByEmail(user.getEmail());
+        user.setRole("student");
+        user.setProfilePicture(ImageUtil.getDefaultProfilePicture());
 
+        Optional<User> sameEmail = userRepository.findByEmail(user.getEmail());
         if (sameEmail.isPresent()) return Optional.empty();
         return Optional.of(userRepository.save(user));
     }

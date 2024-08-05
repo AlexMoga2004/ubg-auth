@@ -1,5 +1,6 @@
 package com.kiyata.ubg_auth;
 
+import com.kiyata.ubg_auth.misc.JwtUtil;
 import com.kiyata.ubg_auth.user.User;
 import com.kiyata.ubg_auth.user.UserService;
 import jakarta.validation.Valid;
@@ -17,6 +18,9 @@ public class AuthController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    JwtUtil jwtUtil;
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/register")
@@ -37,8 +41,15 @@ public class AuthController {
 
         Optional<User> authenticatedUser = userService.authenticate(email, password);
 
-        if (authenticatedUser.isPresent())
-            return ResponseEntity.ok(authenticatedUser.get());
+        if (authenticatedUser.isPresent()) {
+            String token = jwtUtil.generateToken(email);
+            Map<String, Object> response = new HashMap<>();
+
+            response.put("token", token);
+            response.put("user", authenticatedUser.get());
+
+            return ResponseEntity.ok(response);
+        }
 
         return ResponseEntity.status(401).body("Invalid email or password");
     }

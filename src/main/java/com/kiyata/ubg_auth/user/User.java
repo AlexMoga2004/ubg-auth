@@ -1,5 +1,6 @@
 package com.kiyata.ubg_auth.user;
 
+import com.kiyata.ubg_auth.misc.ImageUtil;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
@@ -38,6 +39,9 @@ public class User {
 
     @NotNull(message = "Graduation date is required")
     private LocalDate graduationDate;
+
+    /* Default values not passed by users */
+    private String role;
 
     private byte[] profilePicture;
 }
