@@ -1,9 +1,11 @@
 package com.kiyata.ubg_auth.user;
 
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -11,7 +13,6 @@ import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 @Data
-@Builder(toBuilder = true)
 @Document(collection = "user")
 public class User {
 
@@ -32,7 +33,10 @@ public class User {
     @Size(min = 8, message = "Password must be at least 8 characters long")
     private String password;
 
+    @NotNull(message = "Matriculation date is required")
     private LocalDate matriculationDate;
+
+    @NotNull(message = "Graduation date is required")
     private LocalDate graduationDate;
 
     private byte[] profilePicture;

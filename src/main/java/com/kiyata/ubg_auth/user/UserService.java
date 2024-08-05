@@ -15,9 +15,12 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    public User registerUser(User user) {
+    public Optional<User> registerUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        Optional<User> sameEmail = userRepository.findByEmail(user.getEmail());
+
+        if (sameEmail.isPresent()) return Optional.empty();
+        return Optional.of(userRepository.save(user));
     }
 
     public Optional<User> authenticate(String email, String password) {
