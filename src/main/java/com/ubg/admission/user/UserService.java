@@ -43,8 +43,11 @@ public class UserService {
 
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            if (passwordEncoder.matches(password, user.getPassword()))
-                return Optional.of(user);
+            if (passwordEncoder.matches(password, user.getPassword())) {
+                // Clone user object but remove password
+                User toUser = user.toBuilder().password("HIDDEN").build();
+                return Optional.of(toUser);
+            }
         }
 
         return Optional.empty();
