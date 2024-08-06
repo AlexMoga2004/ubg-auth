@@ -3,6 +3,7 @@ package com.kiyata.ubg_auth;
 import com.kiyata.ubg_auth.misc.JwtUtil;
 import com.kiyata.ubg_auth.user.User;
 import com.kiyata.ubg_auth.user.UserService;
+import com.kiyata.ubg_auth.user.UserUpdate;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -53,4 +54,19 @@ public class AuthController {
 
         return ResponseEntity.status(401).body("Invalid email or password");
     }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PutMapping("/update")
+    public ResponseEntity<?> updateUser(@RequestBody UserUpdate request) {
+        // Pass the user object along with the current password for verification
+        Optional<User> updatedUserResponse = userService.updateUser(request);
+        if (updatedUserResponse.isPresent()) {
+            return ResponseEntity.ok("User updated successfully");
+        }
+
+        Map<String, String> response = new HashMap<>();
+        response.put("password", "Current email / password is incorrect");
+        return ResponseEntity.status(401).body(response);
+    }
+
 }

@@ -44,4 +44,27 @@ public class User {
     private String role;
 
     private byte[] profilePicture;
+
+    public void title() {
+        firstname = toDisplayCase(firstname);
+        firstname = toDisplayCase(lastname);
+        firstname = toDisplayCase(role);
+    }
+
+    private String toDisplayCase(String s) {
+
+        final String ACTIONABLE_DELIMITERS = " '-/";
+
+        StringBuilder sb = new StringBuilder();
+        boolean capNext = true;
+
+        for (char c : s.toCharArray()) {
+            c = (capNext)
+                    ? Character.toUpperCase(c)
+                    : Character.toLowerCase(c);
+            sb.append(c);
+            capNext = (ACTIONABLE_DELIMITERS.indexOf(c) >= 0);
+        }
+        return sb.toString();
+    }
 }
