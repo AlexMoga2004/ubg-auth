@@ -1,4 +1,4 @@
-package com.kiyata.ubg_auth.misc;
+package com.ubg.admission.misc;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -15,8 +16,9 @@ public class JwtUtil {
     // TODO: The private fork of this project that is going into production is OBVIOUSLY going to need a different key
     private final String SECRET_KEY = "my32characterultrasecureandultralongsecretkeythatnobodycanguessanddefinitelydoesnotneedtobereplaced";
 
-    public String generateToken(String email) {
+    public String generateToken(String email, List<String> roles) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("roles", roles);
         return createToken(claims, email);
     }
 
@@ -37,6 +39,10 @@ public class JwtUtil {
 
     public String extractUsername(String token) {
         return extractAllClaims(token).getSubject();
+    }
+
+    public List<String> extractRoles(String token) {
+        return extractAllClaims(token).get("roles", List.class);
     }
 
     private Claims extractAllClaims(String token) {

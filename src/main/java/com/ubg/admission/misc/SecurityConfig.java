@@ -1,4 +1,4 @@
-package com.kiyata.ubg_auth.misc;
+package com.ubg.admission.misc;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

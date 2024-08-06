@@ -1,4 +1,4 @@
-package com.kiyata.ubg_auth.user;
+package com.ubg.admission.user;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 

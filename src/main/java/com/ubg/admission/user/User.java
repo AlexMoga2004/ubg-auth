@@ -1,17 +1,14 @@
-package com.kiyata.ubg_auth.user;
+package com.ubg.admission.user;
 
-import com.kiyata.ubg_auth.misc.ImageUtil;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Document(collection = "user")
@@ -34,21 +31,14 @@ public class User {
     @Size(min = 8, message = "Password must be at least 8 characters long")
     private String password;
 
-    @NotNull(message = "Matriculation date is required")
-    private LocalDate matriculationDate;
-
-    @NotNull(message = "Graduation date is required")
-    private LocalDate graduationDate;
-
     /* Default values not passed by users */
-    private String role;
+    private List<String> roles;
 
-    private byte[] profilePicture;
+    private String profilePictureBase64Image;
 
     public void title() {
         firstname = toDisplayCase(firstname);
-        firstname = toDisplayCase(lastname);
-        firstname = toDisplayCase(role);
+        lastname = toDisplayCase(lastname);
     }
 
     private String toDisplayCase(String s) {

@@ -1,9 +1,9 @@
-package com.kiyata.ubg_auth;
+package com.ubg.admission;
 
-import com.kiyata.ubg_auth.misc.JwtUtil;
-import com.kiyata.ubg_auth.user.User;
-import com.kiyata.ubg_auth.user.UserService;
-import com.kiyata.ubg_auth.user.UserUpdate;
+import com.ubg.admission.misc.JwtUtil;
+import com.ubg.admission.user.User;
+import com.ubg.admission.user.UserService;
+import com.ubg.admission.user.UserUpdate;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -43,7 +43,8 @@ public class AuthController {
         Optional<User> authenticatedUser = userService.authenticate(email, password);
 
         if (authenticatedUser.isPresent()) {
-            String token = jwtUtil.generateToken(email);
+            User user = authenticatedUser.get();
+            String token = jwtUtil.generateToken(email, user.getRoles());
             Map<String, Object> response = new HashMap<>();
 
             response.put("token", token);
@@ -57,9 +58,15 @@ public class AuthController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PutMapping("/update")
-    public ResponseEntity<?> updateUser(@RequestBody UserUpdate request) {
-        // Pass the user object along with the current password for verification
-        Optional<User> updatedUserResponse = userService.updateUser(request);
+    public ResponseEntity<?> updateUser(
+            @RequestHeader("Authorization") String authorizationHeader,
+            @RequestBody UserUpdate request) {
+
+        System.out.println(authorizationHeader);
+        System.out.println(request);
+
+        String token = authorizationHeader.substring(7); // Remove "Bearer "
+        Optional<User> updatedUserResponse = userService.updateUser(token, request);
         if (updatedUserResponse.isPresent()) {
             return ResponseEntity.ok("User updated successfully");
         }

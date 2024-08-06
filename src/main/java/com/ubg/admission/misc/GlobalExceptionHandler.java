@@ -1,4 +1,4 @@
-package com.kiyata.ubg_auth.misc;
+package com.ubg.admission.misc;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
