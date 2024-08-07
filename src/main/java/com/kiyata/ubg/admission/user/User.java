@@ -1,4 +1,4 @@
-package com.ubg.admission.user;
+package com.kiyata.ubg.admission.user;
 
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
@@ -34,6 +34,8 @@ public class User {
 
     /* Default values not passed by users */
     private List<String> roles;
+
+    private List<String> applicationIDs;
 
     private String profilePictureBase64Image;
 

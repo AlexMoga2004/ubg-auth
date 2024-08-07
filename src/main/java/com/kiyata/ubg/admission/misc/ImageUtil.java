@@ -1,4 +1,4 @@
-package com.ubg.admission.misc;
+package com.kiyata.ubg.admission.misc;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.StreamUtils;

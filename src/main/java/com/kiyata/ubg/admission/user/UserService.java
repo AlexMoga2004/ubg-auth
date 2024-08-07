@@ -1,11 +1,12 @@
-package com.ubg.admission.user;
+package com.kiyata.ubg.admission.user;
 
-import com.ubg.admission.misc.ImageUtil;
-import com.ubg.admission.misc.JwtUtil;
+import com.kiyata.ubg.admission.misc.ImageUtil;
+import com.kiyata.ubg.admission.misc.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,14 +22,12 @@ public class UserService {
     @Autowired
     JwtUtil jwtUtil;
 
-    private String title(String text) {
-        return Character.toUpperCase(text.charAt(0)) + text.substring(1).toLowerCase();
-    }
-
     public Optional<User> registerUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(List.of("Student"));
         user.setProfilePictureBase64Image(ImageUtil.getDefaultProfilePicture());
+
+        user.setApplicationIDs(new ArrayList<>());
 
         // Capitalise entries correctly
         user.title();

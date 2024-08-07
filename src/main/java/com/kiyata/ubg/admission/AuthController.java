@@ -1,9 +1,9 @@
-package com.ubg.admission;
+package com.kiyata.ubg.admission;
 
-import com.ubg.admission.misc.JwtUtil;
-import com.ubg.admission.user.User;
-import com.ubg.admission.user.UserService;
-import com.ubg.admission.user.UserUpdate;
+import com.kiyata.ubg.admission.user.UserService;
+import com.kiyata.ubg.admission.user.UserUpdate;
+import com.kiyata.ubg.admission.misc.JwtUtil;
+import com.kiyata.ubg.admission.user.User;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -61,9 +61,6 @@ public class AuthController {
     public ResponseEntity<?> updateUser(
             @RequestHeader("Authorization") String authorizationHeader,
             @RequestBody UserUpdate request) {
-
-        System.out.println(authorizationHeader);
-        System.out.println(request);
 
         String token = authorizationHeader.substring(7); // Remove "Bearer "
         Optional<User> updatedUserResponse = userService.updateUser(token, request);

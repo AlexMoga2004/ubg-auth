@@ -1,4 +1,4 @@
-package com.ubg.admission.misc;
+package com.kiyata.ubg.admission.misc;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

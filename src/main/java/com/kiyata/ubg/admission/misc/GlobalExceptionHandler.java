@@ -1,4 +1,4 @@
-package com.ubg.admission.misc;
+package com.kiyata.ubg.admission.misc;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,5 +19,18 @@ public class GlobalExceptionHandler {
                 errors.put(error.getField(), error.getDefaultMessage())
         );
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+
+    // Generic exception handler for all other exceptions
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Map<String, String>> handleAllExceptions(Exception ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("error", "An error occurred");
+        response.put("message", ex.getMessage()); // Optional: provide a message from the exception
+
+        // Log the exception details for debugging (optional)
+        ex.printStackTrace(); // You may want to use a logging framework instead of printStackTrace()
+
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 }

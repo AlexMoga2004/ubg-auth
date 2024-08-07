@@ -1,4 +1,4 @@
-package com.ubg.admission;
+package com.kiyata.ubg.admission;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

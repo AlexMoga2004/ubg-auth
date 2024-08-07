@@ -1,4 +1,4 @@
-package com.ubg.admission.user;
+package com.kiyata.ubg.admission.user;
 
 import lombok.Data;
 
