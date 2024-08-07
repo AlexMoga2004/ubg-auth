@@ -1,4 +1,4 @@
-package com.kiyata.ubg.admission;
+package com.kiyata.ubg.admission.user;
 
 import com.kiyata.ubg.admission.user.UserService;
 import com.kiyata.ubg.admission.user.UserUpdate;
@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")
-public class AuthController {
+public class UserController {
 
     @Autowired
     UserService userService;

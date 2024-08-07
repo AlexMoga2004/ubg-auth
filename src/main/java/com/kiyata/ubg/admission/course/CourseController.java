@@ -1,4 +1,4 @@
-package com.kiyata.ubg.admission;
+package com.kiyata.ubg.admission.course;
 
 import com.kiyata.ubg.admission.course.Course;
 import com.kiyata.ubg.admission.course.CourseService;
