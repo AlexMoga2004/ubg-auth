@@ -23,10 +23,10 @@ public class Message {
     @NotBlank(message = "Recipient id is required")
     private String recipientID;
 
-    @NotBlank(message = "Message send date is required")
     private LocalDate date;
 
-    @Size(max = 2_000, message = "Message content is required")
+    @NotBlank(message = "Message content is required")
+    @Size(max = 2_000, message = "Message content must be at most 2,000 characters")
     private String messageContent;
 
     private boolean read;

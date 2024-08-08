@@ -3,6 +3,7 @@ package com.kiyata.ubg.admission.message;
 import com.kiyata.ubg.admission.misc.JwtUtil;
 import com.kiyata.ubg.admission.user.User;
 import com.kiyata.ubg.admission.user.UserRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -70,7 +71,7 @@ public class MessageController {
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Message> sendMessage(
             @RequestHeader("Authorization") String authorizationHeader,
-            @RequestBody Message message) {
+            @Valid @RequestBody Message message) {
         String token = authorizationHeader.substring(7); // Remove "Bearer "
         List<String> roles = jwtUtil.extractRoles(token);
 
