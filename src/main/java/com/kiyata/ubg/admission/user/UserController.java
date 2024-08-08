@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -73,4 +74,25 @@ public class UserController {
         return ResponseEntity.status(401).body(response);
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/users")
+    public ResponseEntity<?> searchUsers(
+            @RequestHeader("Authorization") String authorizationToken,
+            @RequestParam(value = "searchTerm", required = false) String searchTerm) {
+
+        List<User> users;
+        String token = authorizationToken.substring(7); // Remove "bearer
+        List<String> roles = jwtUtil.extractRoles(token);
+
+        if (!roles.contains("Admin"))
+            return ResponseEntity.status(401).body("Unauthorized request");
+
+        if (searchTerm != null && !searchTerm.isEmpty()) {
+            users = userService.searchUsersByName(searchTerm.trim());
+        } else {
+            users = userService.getAllUsers();
+        }
+
+        return ResponseEntity.ok(users);
+    }
 }

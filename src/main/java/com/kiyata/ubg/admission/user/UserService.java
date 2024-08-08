@@ -76,4 +76,14 @@ public class UserService {
 
         return Optional.empty();
     }
+
+    public List<User> searchUsersByName(String searchTerm) {
+        // Use your user repository to find users by firstname or lastname
+        return userRepository.findByFirstnameOrLastname(searchTerm);
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
 }
