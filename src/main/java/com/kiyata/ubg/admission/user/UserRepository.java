@@ -9,6 +9,7 @@ import java.util.Optional;
 public interface UserRepository extends MongoRepository<User, String> {
     Optional<User> findByEmail(String email);
 
-    @Query("{ '$or': [ { 'firstname': { '$regex': ?0, '$options': 'i' } }, { 'lastname': { '$regex': ?0, '$options': 'i' } } ] }")
+    @Query(value = "{ '$or': [ { 'firstname': { '$regex': ?0, '$options': 'i' } }, { 'lastname': { '$regex': ?0, '$options': 'i' } } ] }",
+           fields = "{ 'password': 0 }")
     List<User> findByFirstnameOrLastname(String searchTerm);
 }
