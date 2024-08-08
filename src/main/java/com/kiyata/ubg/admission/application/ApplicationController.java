@@ -24,6 +24,7 @@ public class ApplicationController {
     JwtUtil jwtUtil;
 
     @GetMapping
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<List<Application>> getAllApplications(
             @RequestHeader("Authorization") String authorizationHeader) {
 
@@ -47,6 +48,7 @@ public class ApplicationController {
     }
 
     @GetMapping("/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Application> getApplicationById(
             @RequestHeader("Authorization") String authorizationHeader,
             @PathVariable String id) {
@@ -74,6 +76,7 @@ public class ApplicationController {
     }
 
     @PostMapping
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Application> createApplication(
             @RequestHeader("Authorization") String authorizationHeader,
             @RequestBody Application application) {
@@ -91,6 +94,7 @@ public class ApplicationController {
     }
 
     @PutMapping("/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Application> updateApplication(
             @RequestHeader("Authorization") String authorizationHeader,
             @PathVariable String id,
@@ -123,6 +127,7 @@ public class ApplicationController {
     }
 
     @DeleteMapping("/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Void> deleteApplication(
             @RequestHeader("Authorization") String authorizationHeader,
             @PathVariable String id) {

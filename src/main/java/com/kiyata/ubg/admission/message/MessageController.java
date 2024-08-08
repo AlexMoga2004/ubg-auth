@@ -27,6 +27,7 @@ public class MessageController {
     private JwtUtil jwtUtil;
 
     @GetMapping("/received")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Page<Message>> getReceivedMessages(
             @RequestHeader("Authorization") String authorizationHeader,
             @RequestParam(defaultValue = "0") int page,
@@ -46,6 +47,7 @@ public class MessageController {
     }
 
     @GetMapping("/sent")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Page<Message>> getSentMessages(
             @RequestHeader("Authorization") String authorizationHeader,
             @RequestParam(defaultValue = "0") int page,
@@ -65,6 +67,7 @@ public class MessageController {
     }
 
     @PostMapping
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Message> sendMessage(
             @RequestHeader("Authorization") String authorizationHeader,
             @RequestBody Message message) {
@@ -80,6 +83,7 @@ public class MessageController {
     }
 
     @PutMapping("/{id}/read")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Message> markMessageAsRead(
             @RequestHeader("Authorization") String authorizationHeader,
             @PathVariable String id) {
