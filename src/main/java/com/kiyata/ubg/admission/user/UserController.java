@@ -95,4 +95,27 @@ public class UserController {
 
         return ResponseEntity.ok(users);
     }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/users/{id}")
+    public ResponseEntity<?> findUserById(@PathVariable String id) {
+        Optional<User> user = userService.findById(id); // Assume you have a method in userService
+        if (user.isPresent()) {
+            return ResponseEntity.ok(user.get());
+        }
+
+        return ResponseEntity.status(404).body("User not found");
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/check-token")
+    public ResponseEntity<?> checkTokenExpiration(@RequestHeader("Authorization") String authorizationHeader) {
+        String token = authorizationHeader.substring(7); // Remove "Bearer "
+
+        if (jwtUtil.isTokenExpired(token)) {
+            return ResponseEntity.status(401).body("Token is expired");
+        }
+
+        return ResponseEntity.ok("Token is valid");
+    }
 }

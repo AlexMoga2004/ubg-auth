@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -76,6 +77,7 @@ public class MessageController {
         List<String> roles = jwtUtil.extractRoles(token);
 
         if (roles.contains("Admin")) {
+            message.setDate(LocalDate.now());
             Message sentMessage = messageService.sendMessage(message);
             return ResponseEntity.ok(sentMessage);
         } else {

@@ -85,4 +85,13 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public Optional<User> findById(String id) {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()) {
+            User toUser = user.get().toBuilder().password("HIDDEN").build();
+            return Optional.of(toUser);
+        }
+        return Optional.empty();
+    }
+
 }

@@ -25,6 +25,10 @@ public class Message {
 
     private LocalDate date;
 
+    @NotBlank(message = "Message subject is required")
+    @Size(max = 45, message = "Message content must be at most 45 characters")
+    private String messageSubject;
+
     @NotBlank(message = "Message content is required")
     @Size(max = 2_000, message = "Message content must be at most 2,000 characters")
     private String messageContent;
