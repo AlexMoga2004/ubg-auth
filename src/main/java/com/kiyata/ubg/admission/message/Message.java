@@ -8,6 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder(toBuilder = true)
@@ -23,7 +24,7 @@ public class Message {
     @NotBlank(message = "Recipient id is required")
     private String recipientID;
 
-    private LocalDate date;
+    private LocalDateTime date;
 
     @NotBlank(message = "Message subject is required")
     @Size(max = 45, message = "Message content must be at most 45 characters")

@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,7 +42,7 @@ public class MessageController {
         Optional<User> userOptional = userRepository.findByEmail(email);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            Pageable pageable = PageRequest.of(page, size);
+            Pageable pageable = PageRequest.of(page, size).withSort(Sort.by(Sort.Direction.DESC, "date")); // Sort by date descending
             Page<Message> messages = messageService.getMessagesByRecipientID(user.getId(), pageable);
             return ResponseEntity.ok(messages);
         } else {
@@ -60,7 +62,7 @@ public class MessageController {
         Optional<User> userOptional = userRepository.findByEmail(email);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            Pageable pageable = PageRequest.of(page, size);
+            Pageable pageable = PageRequest.of(page, size).withSort(Sort.by(Sort.Direction.DESC, "date")); // Sort by date descending
             Page<Message> messages = messageService.getMessagesBySenderID(user.getId(), pageable);
             return ResponseEntity.ok(messages);
         } else {
@@ -77,7 +79,7 @@ public class MessageController {
         List<String> roles = jwtUtil.extractRoles(token);
 
         if (roles.contains("Admin")) {
-            message.setDate(LocalDate.now());
+            message.setDate(LocalDateTime.now());
             Message sentMessage = messageService.sendMessage(message);
             return ResponseEntity.ok(sentMessage);
         } else {
