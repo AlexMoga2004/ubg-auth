@@ -9,20 +9,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/auth")
 public class UserController {
 
-    @Autowired
-    UserService userService;
+    private final static List<String> ROLES = List.of("Admin", "Student");
 
     @Autowired
-    JwtUtil jwtUtil;
+    private UserService userService;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/register")
@@ -117,5 +116,17 @@ public class UserController {
         }
 
         return ResponseEntity.ok("Token is valid");
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/unique-roles")
+    public ResponseEntity<?> getUniqueRoles(@RequestHeader("Authorization") String authorizationToken) {
+        String token = authorizationToken.substring(7); // Remove "Bearer "
+        List<String> roles = jwtUtil.extractRoles(token);
+
+        if (!roles.contains("Admin"))
+            return ResponseEntity.status(401).body("Unauthorized request");
+
+        return ResponseEntity.ok(ROLES);
     }
 }

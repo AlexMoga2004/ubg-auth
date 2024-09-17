@@ -17,6 +17,10 @@ public class MessageService {
         return messageRepository.findByRecipientID(recipientID, pageable);
     }
 
+    public long getUnreadMessagesCount(String recipientID) {
+        return messageRepository.countByRecipientIDAndRead(recipientID, false);
+    }
+
     public Page<Message> getMessagesBySenderID(String senderID, Pageable pageable) {
         return messageRepository.findBySenderID(senderID, pageable);
     }

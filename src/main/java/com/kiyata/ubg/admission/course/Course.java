@@ -21,4 +21,7 @@ public class Course {
     @Size(max = 2_000, message = "Course description must not exceed 2000 characters")
     private String courseDescription;
 
+    @NotBlank(message = "Course must have image")
+    private String courseBase64Image;
+
 }

@@ -13,4 +13,5 @@ public interface UserRepository extends MongoRepository<User, String> {
             fields = "{ 'password': 0 }")
     List<User> findByFullName(String searchTerm);
 
+    List<User> findByRolesContaining(String role);
 }

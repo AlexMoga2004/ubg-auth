@@ -3,12 +3,15 @@ package com.kiyata.ubg.admission.user;
 import com.kiyata.ubg.admission.misc.ImageUtil;
 import com.kiyata.ubg.admission.misc.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.mongodb.core.aggregation.Fields;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -20,7 +23,10 @@ public class UserService {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    JwtUtil jwtUtil;
+    private MongoTemplate mongoTemplate;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     public Optional<User> registerUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -92,6 +98,10 @@ public class UserService {
             return Optional.of(toUser);
         }
         return Optional.empty();
+    }
+
+    public List<User> findUsersByRole(String role) {
+        return userRepository.findByRolesContaining(role);
     }
 
 }

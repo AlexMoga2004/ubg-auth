@@ -36,6 +36,6 @@ public class Application {
     private String content;
 
     /* Default values not passed by users */
-    private String status; // TODO: enforce with ENUM, for now: "Pending" (default), "Accepted", "Rejected"
+    private String status; // TODO: enforce with ENUM, for now: "Draft", "Pending", "Accepted", "Rejected"
 
 }
